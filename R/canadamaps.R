@@ -60,12 +60,11 @@ scale_fill_map <- function(palette, num, na.value = "grey90") { # 3
 #' @return Your coordinates transformed.
 #' @export
 coord_transform <- function(data, long, lat) { # 3
-  data %>%
-    dplyr::select(c(long, lat)) %>%
-    as.matrix() %>%
-    sf::st_multipoint(dim = 'XY') %>%
-    sf::st_sfc() %>%
-    sf::st_set_crs(4269)
+  coordinates(data) <- c(long, lat)
+  proj4string(data) <- CRS("+proj=longlat +datum=WGS84")
+  data <- spTransform(data, CRS("+proj=lcc +lat_1=49 +lat_2=77 +lon_0=-91.52 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs"))
+
+  data.frame(data)
 }
 
 #' ggplot coordinates
