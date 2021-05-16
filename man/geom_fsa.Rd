@@ -4,7 +4,7 @@
 \alias{geom_fsa}
 \title{mapping fsa shapefile}
 \usage{
-geom_fsa(data = FSA, fill = FSA$PRENAME, colour = "white", size = 0.2)
+geom_fsa(data = FSA, fill = FSA$PRNAME, colour = "white", size = 0.2)
 }
 \arguments{
 \item{data}{a dataset with long and lat coordinates}

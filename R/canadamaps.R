@@ -104,7 +104,7 @@ geom_prov <- function(data = PROV, fill = PROV$PT, colour = NA, size = 0.1) {
 #' @param size size of outline
 #' @return FSA map.
 #' @export
-geom_fsa <- function(data = FSA, fill = FSA$PRENAME, colour = "white", size = 0.2) {
+geom_fsa <- function(data = FSA, fill = FSA$PRNAME, colour = "white", size = 0.2) {
   ggplot2::geom_sf(data = data, aes(fill = fill), color = colour, size = size)
 }
 
