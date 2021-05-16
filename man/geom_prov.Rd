@@ -4,7 +4,7 @@
 \alias{geom_prov}
 \title{mapping provincial shapefile}
 \usage{
-geom_prov(data = PROV, fill = PROV$PT, colour = NA, size = 0.1)
+geom_prov(data = PROV, fill = "PT", colour = NA, size = 0.1)
 }
 \arguments{
 \item{data}{a dataset with long and lat coordinates}
