@@ -93,6 +93,21 @@ geom_prov <- function(data = PROV, fill = PROV$PT, colour = NA, size = 0.1) {
   ggplot2::geom_sf(data = data, aes(fill = fill), color = colour, size = size)
 }
 
+
+#' mapping fsa shapefile
+#'
+#' This function maps the FSA shapefile.
+#'
+#' @param data a dataset with long and lat coordinates
+#' @param fill the colour fill variable
+#' @param colour outline colour, default is NA
+#' @param size size of outline
+#' @return FSA map.
+#' @export
+geom_fsa <- function(data = FSA, fill = FSA$PRENAME, colour = "white", size = 0.2) {
+  ggplot2::geom_sf(data = data, aes(fill = fill), color = colour, size = size)
+}
+
 #' adding labels
 #'
 #' This function adds labels in the center of each province.

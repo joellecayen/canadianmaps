@@ -2,6 +2,7 @@
 
 export(coord_transform)
 export(crs_coord)
+export(geom_fsa)
 export(geom_prov)
 export(label_prov)
 export(scale_fill_map)
