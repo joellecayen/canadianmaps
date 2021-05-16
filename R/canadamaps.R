@@ -89,8 +89,8 @@ crs_coord <- function() { # 3
 #' @param size size of outline
 #' @return Provincial map.
 #' @export
-geom_prov <- function(data = PROV, fill = PROV$PT, colour = NA, size = 0.1) {
-  ggplot2::geom_sf(data = data, aes(fill = stringr::str_glue("{data}${fill}")), color = colour, size = size)
+geom_prov <- function(data = PROV, fill = "PT", colour = NA, size = 0.1) {
+  ggplot2::geom_sf(data = data, aes(fill = data[[fill]]), color = colour, size = size)
 }
 
 
@@ -104,8 +104,8 @@ geom_prov <- function(data = PROV, fill = PROV$PT, colour = NA, size = 0.1) {
 #' @param size size of outline
 #' @return FSA map.
 #' @export
-geom_fsa <- function(data = FSA, fill = FSA$PRNAME, colour = "white", size = 0.2) {
-  ggplot2::geom_sf(data = data, aes(fill = stringr::str_glue("{data}${fill}")), color = colour, size = size)
+geom_fsa <- function(data = FSA, fill = "PRNAME", colour = "white", size = 0.2) {
+  ggplot2::geom_sf(data = data, aes(fill = data[[fill]]), color = colour, size = size)
 }
 
 #' adding labels
@@ -118,7 +118,7 @@ geom_fsa <- function(data = FSA, fill = FSA$PRNAME, colour = "white", size = 0.2
 #' @param size size of outline
 #' @return Provincial map.
 #' @export
-label_prov <- function(data = PROV, label = PROV$PT, colour = "grey20", size = 3) {
-  ggplot2::geom_text(data = data, aes(X, Y, label = label), size = size, color = colour)
+label_prov <- function(data = PROV, label = "PT", colour = "grey20", size = 3) {
+  ggplot2::geom_text(data = data, aes(X, Y, label = data[[label]]), size = size, color = colour)
 
 }
