@@ -90,7 +90,7 @@ crs_coord <- function() { # 3
 #' @return Provincial map.
 #' @export
 geom_prov <- function(data = PROV, fill = "PT", colour = NA, size = 0.1) {
-  ggplot2::geom_sf(data = data, aes(fill = .data[[fill]]), color = colour, size = size)
+  ggplot2::geom_sf(data = data, aes(fill = data[[fill]]), color = colour, size = size)
 }
 
 
@@ -105,7 +105,7 @@ geom_prov <- function(data = PROV, fill = "PT", colour = NA, size = 0.1) {
 #' @return FSA map.
 #' @export
 geom_fsa <- function(data = FSA, fill = "PRNAME", colour = "white", size = 0.2) {
-  ggplot2::geom_sf(data = data, aes(fill = .data[[fill]]), color = colour, size = size)
+  ggplot2::geom_sf(data = data, aes(fill = data[[fill]]), color = colour, size = size)
 }
 
 #' adding labels
@@ -119,6 +119,6 @@ geom_fsa <- function(data = FSA, fill = "PRNAME", colour = "white", size = 0.2) 
 #' @return Provincial map.
 #' @export
 label_prov <- function(data = PROV, label = "PT", colour = "grey20", size = 3) {
-  ggplot2::geom_text(data = data, aes(X, Y, label = .data[[label]]), size = size, color = colour)
+  ggplot2::geom_text(data = data, aes(X, Y, label = data[[label]]), size = size, color = colour)
 
 }
