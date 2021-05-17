@@ -148,7 +148,7 @@ label_prov <- function(data = PROV, label = "PT", colour = "grey20", size = 3) {
 #' @param size size of outline
 #' @return Regional map labels.
 #' @export
-label_reg <- function(data = REG, label = "region", colour = "grey20", size = 8) {
+label_reg <- function(data = REG, label = "region", colour = "grey20", size = 4) {
   ggplot2::geom_text(data = data, aes(X, Y, label = data[[label]]), size = size, color = colour)
 
 }
