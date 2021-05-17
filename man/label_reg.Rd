@@ -4,7 +4,7 @@
 \alias{label_reg}
 \title{adding regional labels}
 \usage{
-label_reg(data = REG, label = "region", colour = "grey20", size = 8)
+label_reg(data = REG, label = "region", colour = "grey20", size = 4)
 }
 \arguments{
 \item{data}{a dataset with long and lat coordinates}
