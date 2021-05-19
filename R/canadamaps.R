@@ -123,6 +123,21 @@ geom_fsa <- function(data = FSA, fill = "PRNAME", colour = "white", size = 0.2) 
   ggplot2::geom_sf(data = data, aes(fill = data[[fill]]), color = colour, size = size)
 }
 
+#' adding text
+#'
+#' This function adds labels in the center of each province.
+#'
+#' @param data a dataset with long and lat coordinates
+#' @param label the label variable
+#' @param colour outline colour, default is NA
+#' @param size size of outline
+#' @return Provincial map labels
+#' @export
+text_prov <- function(data = PROV, label = "PT", colour = "grey20", size = 3) {
+  ggrepel::geom_text_repel(data = data, aes(X, Y, label = data[[label]]), size = size, color = colour, point.size = NA,  min.segment.length = 0.1, box.padding = 0.4)
+
+}
+
 #' adding labels
 #'
 #' This function adds labels in the center of each province.
@@ -134,7 +149,7 @@ geom_fsa <- function(data = FSA, fill = "PRNAME", colour = "white", size = 0.2) 
 #' @return Provincial map labels
 #' @export
 label_prov <- function(data = PROV, label = "PT", colour = "grey20", size = 3) {
-  ggrepel::geom_text_repel(data = data, aes(X, Y, label = data[[label]]), size = size, color = colour, point.size = NA,  min.segment.length = 0)
+  ggrepel::geom_label_repel(data = data, aes(X, Y, label = data[[label]]), size = size, color = colour, point.size = NA,  min.segment.length = 0.1, box.padding = 0.4, alpha=0.7, label.r=0.75, label.padding=0.5, label.size = NA)
 
 }
 
