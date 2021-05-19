@@ -149,7 +149,7 @@ text_prov <- function(data = PROV, label = "PT", colour = "grey20", size = 3) {
 #' @return Provincial map labels
 #' @export
 label_prov <- function(data = PROV, label = "PT", colour = "grey20", size = 3) {
-  ggrepel::geom_label_repel(data = data, aes(X, Y, label = data[[label]]), size = size, color = colour, point.size = NA,  min.segment.length = 0.1, box.padding = 0.4, alpha=0.7, label.r=0.75, label.padding=0.5, label.size = NA)
+  ggrepel::geom_label_repel(data = data, aes(X, Y, label = data[[label]]), size = size, color = colour, point.size = NA,  min.segment.length = 0.1, box.padding = 0.2, alpha=0.7, label.r=1, label.padding=0.7, label.size = NA)
 
 }
 
