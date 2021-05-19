@@ -133,7 +133,7 @@ geom_fsa <- function(data = FSA, fill = "PRNAME", colour = "white", size = 0.2) 
 #' @return Provincial map labels
 #' @export
 label_prov <- function(data = PROV, label = "PT", colour = "grey20", size = 3) {
-  ggplot2::geom_text(data = data, aes(X, Y, label = data[[label]]), size = size, color = colour)
+  ggrepel::geom_text_repel(data = data, aes(X, Y, label = data[[label]]), size = size, color = colour, point.size = NA, max.overlaps = Inf, min.segment.length = 0)
 
 }
 
@@ -149,6 +149,6 @@ label_prov <- function(data = PROV, label = "PT", colour = "grey20", size = 3) {
 #' @return Regional map labels.
 #' @export
 label_reg <- function(data = REG, label = "region", colour = "grey20", size = 4) {
-  ggplot2::geom_text(data = data, aes(X, Y, label = data[[label]]), size = size, color = colour)
+  ggrepel::geom_text_repel(data = data, aes(X, Y, label = data[[label]]), size = size, color = colour, point.size = NA, max.overlaps = Inf, min.segment.length = 0)
 
 }
