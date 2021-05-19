@@ -41,7 +41,8 @@ scale_fill_map <- function(palette, num, na.value = "grey90") { # 3
                    palette == "Teal" ~ grDevices::colorRampPalette(c("#D1F0ED", "#3CBBB1", "#2D8B83", "#0F2E2C"))(num),
                    palette == "Beach" ~ grDevices::colorRampPalette(c("#FCB9AA", "#FFDBCC", "#ECEAE4", "#A2E1DB", "#55CBCD"))(num),
                    palette == "Summer" ~ grDevices::colorRampPalette(c("#53CFDA", "#EFF2E6", "#FF7994", "#FFC900", "#FFED00"))(num),
-                   palette == "Mauve" ~ grDevices::colorRampPalette(c("#F7DFD3", "#E2C3C8", "#AFAFC7", "#5F7DAF"))(num)
+                   palette == "Mauve" ~ grDevices::colorRampPalette(c("#F7DFD3", "#E2C3C8", "#AFAFC7", "#5F7DAF"))(num),
+                   palette == "Anada" ~ grDevices::colorRampPalette(c("#D0E0F7","#BCD4F4","#943C44", "#E45C64", "#fdbc00", "#e1ad01"))(num)
                    )
 
   ggplot2::scale_fill_manual(values = mycolours, na.value = na.value)
