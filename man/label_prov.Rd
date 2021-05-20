@@ -4,7 +4,14 @@
 \alias{label_prov}
 \title{adding labels}
 \usage{
-label_prov(data = PROV, label = "PT", colour = "grey20", size = 3)
+label_prov(
+  data = PROV,
+  label = "PT",
+  colour = "grey20",
+  size = 3,
+  outline = NA,
+  alpha = 0.7
+)
 }
 \arguments{
 \item{data}{a dataset with long and lat coordinates}

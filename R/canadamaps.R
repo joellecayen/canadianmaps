@@ -33,16 +33,20 @@ theme_map <- function(base_size=9, base_family="") { # 3
 #' @export
 scale_fill_map <- function(palette, num, na.value = "grey90") { # 3
 
+
   mycolours <- dplyr::case_when(palette == "Bright" ~ grDevices::colorRampPalette(RColorBrewer::brewer.pal(6, "Set2")[c(3, 1, 5, 6, 2, 4)])(num),
                    palette == "Pastel" ~ grDevices::colorRampPalette(RColorBrewer::brewer.pal(6, "Pastel2")[c(3, 1, 5, 6, 2, 4)])(num),
                    palette == "Kelly" ~ grDevices::colorRampPalette(c("#B0DFE5",RColorBrewer::brewer.pal(9, "Set3")[c(1, 11, 7, 12, 6, 4, 8, 10, 3)], "#FADADD"))(num),
-                   palette == "CNISP" ~ grDevices::colorRampPalette(c("#E7E7EF", "#646CAC", "#393F93", "#0E0F40"))(num),
-                   palette == "PHAC" ~ grDevices::colorRampPalette(c("#F4CDD0","#ECACB0", "#D33F49","#B72A33", "#851E25"))(num),
                    palette == "Teal" ~ grDevices::colorRampPalette(c("#D1F0ED", "#3CBBB1", "#2D8B83", "#0F2E2C"))(num),
                    palette == "Beach" ~ grDevices::colorRampPalette(c("#FCB9AA", "#FFDBCC", "#ECEAE4", "#A2E1DB", "#55CBCD"))(num),
                    palette == "Summer" ~ grDevices::colorRampPalette(c("#53CFDA", "#EFF2E6", "#FF7994", "#FFC900", "#FFED00"))(num),
                    palette == "Mauve" ~ grDevices::colorRampPalette(c("#F7DFD3", "#E2C3C8", "#AFAFC7", "#5F7DAF"))(num),
-                   palette == "Anada" ~ grDevices::colorRampPalette(c("#D0E0F7","#BCD4F4","#943C44", "#E45C64", "#fdbc00", "#e1ad01"))(num)
+                   palette == "Anada" ~ grDevices::colorRampPalette(c("#D0E0F7","#BCD4F4","#943C44", "#E45C64", "#fdbc00", "#e1ad01"))(num),
+                   palette == "Viv" ~ grDevices::colorRampPalette(c("#B4B4D7", "#525183", "#ACBCD3"))(num),
+                   palette == "Starbs" ~ grDevices::colorRampPalette(c("#0C5C41", "#5A9C84", "#D3E4DF",  "#3EC8A9"))(num),
+                   palette == "Purples" ~ grDevices::colorRampPalette(c("#E7E7EF", "#646CAC", "#393F93", "#0E0F40"))(num),
+                   palette == "PHAC" ~ grDevices::colorRampPalette(c("#F4CDD0","#D33F49","#B72A33", "#851E25"))(num),
+                   palette == "CNISP" ~ grDevices::colorRampPalette(c("#B1B2D1", "#101573", "#DBE0E6", "#26374A"))(num)
                    )
 
   ggplot2::scale_fill_manual(values = mycolours, na.value = na.value)
@@ -148,8 +152,8 @@ text_prov <- function(data = PROV, label = "PT", colour = "grey20", size = 3) {
 #' @param size size of outline
 #' @return Provincial map labels
 #' @export
-label_prov <- function(data = PROV, label = "PT", colour = "grey20", size = 3) {
-  ggrepel::geom_label_repel(data = data, aes(X, Y, label = data[[label]]), size = size, color = colour, point.size = NA,  min.segment.length = 0.1, box.padding = 0.2, alpha=0.7, label.r=1, label.padding=0.7, label.size = NA)
+label_prov <- function(data = PROV, label = "PT", colour = "grey20", size = 3, outline = NA, alpha=0.7) {
+  ggrepel::geom_label_repel(data = data, aes(X, Y, label = data[[label]]), size = size, color = colour, point.size = NA,  min.segment.length = 0.1, box.padding = 0.2, alpha=alpha, label.r=1, label.padding=0.7, label.size = outline)
 
 }
 
