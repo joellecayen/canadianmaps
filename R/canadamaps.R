@@ -31,7 +31,7 @@ theme_map <- function(base_size=9, base_family="") { # 3
 #' @param na.val a colour value for NA, defaults to light grey
 #' @return a ggplot colour scale
 #' @export
-scale_fill_map <- function(palette, num, na.value = "grey90") { # 3
+scale_fill_map <- function(palette, num, na.value = "grey90", rev=FALSE) { # 3
 
 
   mycolours <- dplyr::case_when(palette == "Bright" ~ grDevices::colorRampPalette(RColorBrewer::brewer.pal(6, "Set2")[c(3, 1, 5, 6, 2, 4)])(num),
@@ -46,10 +46,16 @@ scale_fill_map <- function(palette, num, na.value = "grey90") { # 3
                    palette == "Starbs" ~ grDevices::colorRampPalette(c("#0C5C41", "#5A9C84", "#D3E4DF",  "#3EC8A9"))(num),
                    palette == "Purples" ~ grDevices::colorRampPalette(c("#E7E7EF", "#646CAC", "#393F93", "#0E0F40"))(num),
                    palette == "PHAC" ~ grDevices::colorRampPalette(c("#F4CDD0","#D33F49","#B72A33", "#851E25"))(num),
-                   palette == "CNISP" ~ grDevices::colorRampPalette(c("#B1B2D1", "#101573", "#DBE0E6", "#26374A"))(num)
+                   palette == "CNISP" ~ grDevices::colorRampPalette(c("#B1B2D1", "#101573", "#DBE0E6", "#26374A"))(num),
+                   palette == "HAI" ~ grDevices::colorRampPalette(c("#BF2431","#563c98",  "#154360", "#48C9B0"))(num)             
                    )
 
-  ggplot2::scale_fill_manual(values = mycolours, na.value = na.value)
+  if(rev == TRUE) {
+    ggplot2::scale_fill_manual(values = rev(mycolours), na.value = na.value)
+
+  } else{
+    ggplot2::scale_fill_manual(values = mycolours, na.value = na.value)
+  }
 
 }
 
