@@ -16,7 +16,7 @@
   
   New submission
   
-  Version contains large components (0.0.0.9000)
+  Version contains large components (1.0.0)
   
   Possibly misspelled words in DESCRIPTION:
     sortation (10:82)
