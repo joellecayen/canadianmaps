@@ -7,17 +7,21 @@ Authors@R:
            role = c("aut", "cre"),
            email = "joelle.cayen@phac-aspc.gc.ca",
            comment = "")
-Description: Several functions to make mapping provincial, regional, and FSA data easy using 'ggplot2'.
+Description: Several functions to make mapping provincial, regional, and forward sortation area data easy using 'ggplot2'.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports: 
-    tidyverse,
     ggplot2,
     sp,
-    ggrepel
+    rgdal,
+    ggrepel,
+    RColorBrewer,
+    dplyr
 Depends: 
     R (>= 2.10)
-    
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

@@ -2,20 +2,22 @@
 % Please edit documentation in R/canadianmaps.R
 \name{scale_fill_map}
 \alias{scale_fill_map}
-\title{Colour Palettes Fill}
+\title{Color Palettes Fill}
 \usage{
 scale_fill_map(palette, num, na.value = "grey90", rev = FALSE)
 }
 \arguments{
-\item{palette}{colour palette name}
+\item{palette}{color palette name}
 
-\item{num}{number of colours to create}
+\item{num}{number of colors to create}
 
-\item{na.value}{a colour value for NA, defaults to light grey}
+\item{na.value}{a color value for NA, defaults to light gray}
+
+\item{rev}{condition to reverse the order of the colors}
 }
 \value{
-a ggplot colour palette
+a ggplot color palette
 }
 \description{
-Create a custom number of colours to use for graphing or mapping based on preset colour palettes.
+Create a custom number of colors to use for graphing or mapping based on preset color palettes.
 }

@@ -7,11 +7,11 @@
 geom_fsa(data = FSA, fill = "PRNAME", colour = "white", size = 0.2)
 }
 \arguments{
-\item{data}{a dataset with geometry variable}
+\item{data}{a data set with geometry variable}
 
-\item{fill}{the colour fill variable}
+\item{fill}{the color fill variable}
 
-\item{colour}{outline colour, default is NA}
+\item{colour}{outline color, default is NA}
 
 \item{size}{size of outline}
 }
@@ -19,5 +19,5 @@ geom_fsa(data = FSA, fill = "PRNAME", colour = "white", size = 0.2)
 FSA map.
 }
 \description{
-Maps FSA data using statscan FSA shapefile.
+Maps FSA data using Statistics Canada FSA shape file.
 }

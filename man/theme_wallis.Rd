@@ -10,5 +10,5 @@ theme_wallis()
 A theme for ggplot
 }
 \description{
-Custom ggplot theme for graphing.
+Custom theme for graphing.
 }

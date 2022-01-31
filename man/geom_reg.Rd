@@ -7,11 +7,11 @@
 geom_reg(data = REG, fill = "region", colour = NA, size = 0.1)
 }
 \arguments{
-\item{data}{a dataset with geometry variable}
+\item{data}{a data set with geometry variable}
 
-\item{fill}{the colour fill variable}
+\item{fill}{the color fill variable}
 
-\item{colour}{outline colour, default is NA}
+\item{colour}{outline color, default is NA}
 
 \item{size}{size of outline}
 }
@@ -19,5 +19,5 @@ geom_reg(data = REG, fill = "region", colour = NA, size = 0.1)
 Regional map.
 }
 \description{
-Maps regional data using statscan province shapefile.
+Maps regional data using Statistics Canada province shape file.
 }

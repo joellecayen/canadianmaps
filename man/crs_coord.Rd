@@ -2,13 +2,13 @@
 % Please edit documentation in R/canadianmaps.R
 \name{crs_coord}
 \alias{crs_coord}
-\title{ggplot map coordinate system}
+\title{Map coordinate system}
 \usage{
 crs_coord()
 }
 \value{
-a coordinate system for ggplot2
+a coordinate system for mapping
 }
 \description{
-Used to visualise simple feature (sf) objects. Required to plot geom objects.
+Used to visualize simple feature (sf) objects. Required to plot geometry objects.
 }

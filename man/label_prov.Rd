@@ -14,17 +14,21 @@ label_prov(
 )
 }
 \arguments{
-\item{data}{a dataset with geometry variable}
+\item{data}{a data set with geometry variable}
 
 \item{label}{the label variable}
 
-\item{colour}{label colour}
+\item{colour}{label color}
 
 \item{size}{label size}
+
+\item{outline}{outline color}
+
+\item{alpha}{transparency}
 }
 \value{
 Provincial map labels
 }
 \description{
-Adds text labels in the center of each province with light grey bubble.
+Adds text labels in the center of each province with light gray bubble.
 }

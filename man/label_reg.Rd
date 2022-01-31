@@ -7,11 +7,11 @@
 label_reg(data = REG, label = "region", colour = "grey20", size = 4)
 }
 \arguments{
-\item{data}{a dataset with geometry variable}
+\item{data}{a data set with geometry variable}
 
 \item{label}{the label variable}
 
-\item{colour}{label colour}
+\item{colour}{label color}
 
 \item{size}{label size}
 }
@@ -19,5 +19,5 @@ label_reg(data = REG, label = "region", colour = "grey20", size = 4)
 Regional map labels.
 }
 \description{
-Adds text labels in the center of each region with light grey bubble.
+Adds text labels in the center of each region with light gray bubble.
 }

@@ -7,7 +7,7 @@
 coord_transform(data, long, lat)
 }
 \arguments{
-\item{data}{a dataset with long and lat coordinates}
+\item{data}{a data set with long and lat coordinates}
 
 \item{long}{the longitude variable name}
 
@@ -17,5 +17,5 @@ coord_transform(data, long, lat)
 Your coordinates transformed.
 }
 \description{
-Converts your longitude and latitude coordinates to match the maps to properly overlay in ggplot.
+Converts your longitude and latitude coordinates to match the maps to properly overlay.
 }

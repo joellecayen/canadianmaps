@@ -7,11 +7,11 @@
 text_prov(data = PROV, label = "PT", colour = "grey20", size = 3)
 }
 \arguments{
-\item{data}{a dataset with geometry variable}
+\item{data}{a data set with geometry variable}
 
 \item{label}{the label variable}
 
-\item{colour}{text colour}
+\item{colour}{text color}
 
 \item{size}{text size}
 }

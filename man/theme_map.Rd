@@ -6,9 +6,14 @@
 \usage{
 theme_map(base_size = 9, base_family = "")
 }
+\arguments{
+\item{base_size}{size for text}
+
+\item{base_family}{font for text}
+}
 \value{
 A blank theme for ggplot
 }
 \description{
-Blank ggplot theme for mapping.
+Blank theme for mapping.
 }

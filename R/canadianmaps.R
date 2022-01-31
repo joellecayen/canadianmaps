@@ -1,16 +1,26 @@
 
-globalVariables(c("aes", '%+replace%', 'element_blank', 'unit', 'element_line',
-                  'element_text', 'element_blank'))
+globalVariables(c("aes", '%+replace%', 'element_blank', 'unit', 'element_line', 'element_rect',
+                  'element_text', 'element_blank', 'FSA', 'PROV', 'REG', 'X', 'Y'))
+
 
 #' Provincial data set with geometry
 #'
-#' A dataset containing the Canadian province geometry shapes
+#' A data set containing the Canadian province geometry shapes
 #'
 #' @format A data frame with 13 rows and 12 variables:
 #' \describe{
+#'   \item{PREABBR}{Province abbreviated English}
+#'   \item{PRENAME}{Province name English}
+#'   \item{PRFABBR}{Province abbreviated French}
+#'   \item{PRFNAME}{Province name French}
+#'   \item{PRNAME}{Province name}
 #'   \item{PRUID}{ID column for each province}
-#'   \item{region}{national region}
 #'   \item{PT}{province or territory}
+#'   \item{region}{national region}
+#'   \item{X}{center of shape x axis}
+#'   \item{Y}{center of shape y axis}
+#'   \item{rmapshaperid}{id for geometry}
+#'   \item{geometry}{map geometry}
 #'   ...
 #' }
 #' @source \url{https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-2016-eng.cfm}
@@ -22,21 +32,48 @@ globalVariables(c("aes", '%+replace%', 'element_blank', 'unit', 'element_line',
 #'
 #' @format A data frame with 13 rows and 12 variables:
 #' \describe{
+#'   \item{PREABBR}{Province abbreviated English}
+#'   \item{PRENAME}{Province name English}
+#'   \item{PRFABBR}{Province abbreviated French}
+#'   \item{PRFNAME}{Province name French}
+#'   \item{PRNAME}{Province name}
 #'   \item{PRUID}{ID column for each province}
-#'   \item{region}{national region}
 #'   \item{PT}{province or territory}
+#'   \item{region}{national region}
+#'   \item{X}{center of shape x axis}
+#'   \item{Y}{center of shape y axis}
+#'   \item{rmapshaperid}{id for geometry}
+#'   \item{geometry}{map geometry}
 #'   ...
 #' }
 #' @source \url{https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-2016-eng.cfm}
 "REG"
 
+#' FSA data set with geometry
+#'
+#' A data set containing the Canadian FSA geometry shapes
+#'
+#' @format A data frame with 1614 rows and 6 variables:
+#' \describe{
+#'   \item{CFSAUID}{ID column for each FSA code}
+#'   \item{PRNAME}{Province name}
+#'   \item{PRUID}{ID column for each province}
+#'   \item{PT}{province or territory}
+#'   \item{rmapshaperid}{id for geometry}
+#'   \item{geometry}{map geometry}
+#'   ...
+#' }
+#' @source \url{https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-2016-eng.cfm}
+"FSA"
 
 
 #' Map theme
 #'
-#' Blank ggplot theme for mapping.
+#' Blank theme for mapping.
 #'
 #' @return A blank theme for ggplot
+#' @param base_size size for text
+#' @param base_family font for text
 #' @export
 theme_map <- function(base_size=9, base_family="") { # 3
   ggplot2::theme_bw(base_size=base_size, base_family=base_family) %+replace%
@@ -56,34 +93,36 @@ theme_map <- function(base_size=9, base_family="") { # 3
 
 #' Wallis graph theme
 #'
-#' Custom ggplot theme for graphing.
+#' Custom theme for graphing.
 #'
 #' @return A theme for ggplot
 #' @export
 theme_wallis <- function() {
 
   ggplot2::theme(axis.line = element_line(color = 'black'),
-        axis.text = element_text(size = 13),
         plot.background = element_blank(),
         panel.background = element_blank(),
         panel.grid.minor = element_blank(),
         panel.grid.major.y = element_line(color="gray", linetype="dashed"),
         panel.grid.major.x = element_blank(),
         legend.position = "bottom",
-        legend.text = element_text(size=13),
-        aspect.ratio = 1/3,
-        legend.key = element_blank())
+        legend.key = element_blank(),
+        strip.text = element_text(color = "white", size = 12),
+        strip.background = element_rect(fill="black"),
+        axis.text = element_text(size=10),
+        axis.title = element_text(size=11))
 }
 
 
-#' Colour Palettes Fill
+#' Color Palettes Fill
 #'
-#' Create a custom number of colours to use for graphing or mapping based on preset colour palettes.
+#' Create a custom number of colors to use for graphing or mapping based on preset color palettes.
 #'
-#' @param palette colour palette name
-#' @param num number of colours to create
-#' @param na.value a colour value for NA, defaults to light grey
-#' @return a ggplot colour palette
+#' @param palette color palette name
+#' @param num number of colors to create
+#' @param na.value a color value for NA, defaults to light gray
+#' @param rev condition to reverse the order of the colors
+#' @return a ggplot color palette
 #' @export
 scale_fill_map <- function(palette, num, na.value = "grey90", rev=FALSE) { # 3
 
@@ -100,7 +139,7 @@ scale_fill_map <- function(palette, num, na.value = "grey90", rev=FALSE) { # 3
                    palette == "Starbs" ~ grDevices::colorRampPalette(c("#0C5C41", "#5A9C84", "#D3E4DF",  "#3EC8A9"))(num),
                    palette == "Purples" ~ grDevices::colorRampPalette(c("#E7E7EF", "#646CAC", "#393F93", "#0E0F40"))(num),
                    palette == "PHAC" ~ grDevices::colorRampPalette(c("#F4CDD0","#D33F49","#B72A33", "#851E25"))(num),
-                   palette == "CNISP" ~ grDevices::colorRampPalette(c("#B1B2D1", "#101573", "#DBE0E6", "#26374A"))(num),
+                   palette == "CNISP" ~ grDevices::colorRampPalette(c("#4F666C", "#6E8B93", "#8CACB5", "#B1C7CD", "#D8E5EB"))(num),
                    palette == "Jess" ~ grDevices::colorRampPalette(c("#FFC55E", "#D49D43", "#556F60", "#3E543F"))(num),
                    palette == "HAI" ~ grDevices::colorRampPalette(c("#BF2431","#563c98",  "#154360", "#48C9B0"))(num)
                    )
@@ -114,14 +153,15 @@ scale_fill_map <- function(palette, num, na.value = "grey90", rev=FALSE) { # 3
 
 }
 
-#' Colour Palettes Line Color
+#' Color Palettes Line Color
 #'
-#' Create a custom number of colours to use for graphing or mapping based on preset colour palettes.
+#' Create a custom number of colors to use for graphing or mapping based on preset color palettes.
 #'
-#' @param palette colour palette name
-#' @param num number of colours to create
-#' @param na.value a colour value for NA, defaults to light grey
-#' @return a ggplot colour palette
+#' @param palette color palette name
+#' @param num number of colors to create
+#' @param na.value a color value for NA, defaults to light gray
+#' @param rev condition to reverse the order of the colors
+#' @return a ggplot color palette
 #' @export
 scale_color_map <- function(palette, num, na.value = "grey90", rev=FALSE) { # 3
 
@@ -138,7 +178,7 @@ scale_color_map <- function(palette, num, na.value = "grey90", rev=FALSE) { # 3
                    palette == "Starbs" ~ grDevices::colorRampPalette(c("#0C5C41", "#5A9C84", "#D3E4DF",  "#3EC8A9"))(num),
                    palette == "Purples" ~ grDevices::colorRampPalette(c("#E7E7EF", "#646CAC", "#393F93", "#0E0F40"))(num),
                    palette == "PHAC" ~ grDevices::colorRampPalette(c("#F4CDD0","#D33F49","#B72A33", "#851E25"))(num),
-                   palette == "CNISP" ~ grDevices::colorRampPalette(c("#B1B2D1", "#101573", "#DBE0E6", "#26374A"))(num),
+                   palette == "CNISP" ~ grDevices::colorRampPalette(c("#4F666C", "#6E8B93", "#8CACB5", "#B1C7CD", "#D8E5EB"))(num),
                    palette == "Jess" ~ grDevices::colorRampPalette(c("#FFC55E", "#D49D43", "#556F60", "#3E543F"))(num),
                    palette == "HAI" ~ grDevices::colorRampPalette(c("#BF2431","#563c98",  "#154360", "#48C9B0"))(num)
                    )
@@ -155,14 +195,17 @@ scale_color_map <- function(palette, num, na.value = "grey90", rev=FALSE) { # 3
 
 #' Transforming map coordinates
 #'
-#' Converts your longitude and latitude coordinates to match the maps to properly overlay in ggplot.
+#' Converts your longitude and latitude coordinates to match the maps to properly overlay.
 #'
-#' @param data a dataset with long and lat coordinates
+#' @param data a data set with long and lat coordinates
 #' @param long the longitude variable name
 #' @param lat the latitude variable name
+#' @import rgdal
 #' @return Your coordinates transformed.
 #' @export
 coord_transform <- function(data, long, lat) { # 3
+
+
   sp::coordinates(data) <- c(long, lat)
   sp::proj4string(data) <- sp::CRS("+proj=longlat +datum=WGS84")
   data <- sp::spTransform(data, sp::CRS("+proj=lcc +lat_1=49 +lat_2=77 +lon_0=-91.52 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs"))
@@ -171,11 +214,11 @@ coord_transform <- function(data, long, lat) { # 3
 }
 
 
-#' ggplot map coordinate system
+#' Map coordinate system
 #'
-#' Used to visualise simple feature (sf) objects. Required to plot geom objects.
+#' Used to visualize simple feature (sf) objects. Required to plot geometry objects.
 #'
-#' @return a coordinate system for ggplot2
+#' @return a coordinate system for mapping
 #' @export
 crs_coord <- function() { # 3
   ggplot2::coord_sf(crs = "+proj=lcc +lat_1=49 +lat_2=77 +lon_0=-91.52 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs")
@@ -185,11 +228,11 @@ crs_coord <- function() { # 3
 
 #' Mapping provincial data
 #'
-#' Maps provincial data using statscan province shapefile.
+#' Maps provincial data using Statistics Canada province shape file.
 #'
-#' @param data a dataset with geometry variable
-#' @param fill the colour fill variable
-#' @param colour outline colour, default is NA
+#' @param data a data set with geometry variable
+#' @param fill the color fill variable
+#' @param colour outline color, default is NA
 #' @param size size of outline
 #' @return Provincial map.
 #' @export
@@ -199,11 +242,11 @@ geom_prov <- function(data = PROV, fill = "PT", colour = NA, size = 0.1) {
 
 #' Mapping regional data
 #'
-#' Maps regional data using statscan province shapefile.
+#' Maps regional data using Statistics Canada province shape file.
 #'
-#' @param data a dataset with geometry variable
-#' @param fill the colour fill variable
-#' @param colour outline colour, default is NA
+#' @param data a data set with geometry variable
+#' @param fill the color fill variable
+#' @param colour outline color, default is NA
 #' @param size size of outline
 #' @return Regional map.
 #' @export
@@ -214,11 +257,11 @@ geom_reg <- function(data = REG, fill = "region", colour = NA, size = 0.1) {
 
 #' Mapping FSA data
 #'
-#' Maps FSA data using statscan FSA shapefile.
+#' Maps FSA data using Statistics Canada FSA shape file.
 #'
-#' @param data a dataset with geometry variable
-#' @param fill the colour fill variable
-#' @param colour outline colour, default is NA
+#' @param data a data set with geometry variable
+#' @param fill the color fill variable
+#' @param colour outline color, default is NA
 #' @param size size of outline
 #' @return FSA map.
 #' @export
@@ -231,9 +274,9 @@ geom_fsa <- function(data = FSA, fill = "PRNAME", colour = "white", size = 0.2) 
 #'
 #' Adds text labels in the center of each province.
 #'
-#' @param data a dataset with geometry variable
+#' @param data a data set with geometry variable
 #' @param label the label variable
-#' @param colour text colour
+#' @param colour text color
 #' @param size text size
 #' @return Provincial map labels
 #' @export
@@ -244,11 +287,11 @@ text_prov <- function(data = PROV, label = "PT", colour = "grey20", size = 3) {
 
 #' Province labels
 #'
-#' Adds text labels in the center of each province with light grey bubble.
+#' Adds text labels in the center of each province with light gray bubble.
 #'
-#' @param data a dataset with geometry variable
+#' @param data a data set with geometry variable
 #' @param label the label variable
-#' @param colour label colour
+#' @param colour label color
 #' @param size label size
 #' @param outline outline color
 #' @param alpha transparency
@@ -262,11 +305,11 @@ label_prov <- function(data = PROV, label = "PT", colour = "grey20", size = 3, o
 
 #' Regional labels
 #'
-#' Adds text labels in the center of each region with light grey bubble.
+#' Adds text labels in the center of each region with light gray bubble.
 #'
-#' @param data a dataset with geometry variable
+#' @param data a data set with geometry variable
 #' @param label the label variable
-#' @param colour label colour
+#' @param colour label color
 #' @param size label size
 #' @return Regional map labels.
 #' @export
