@@ -2,6 +2,8 @@
 
 export(coord_transform)
 export(crs_coord)
+export(geom_cd)
+export(geom_csd)
 export(geom_fsa)
 export(geom_prov)
 export(geom_reg)
