@@ -66,6 +66,42 @@ globalVariables(c("aes", '%+replace%', 'element_blank', 'unit', 'element_line', 
 #' @source \url{https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-2016-eng.cfm}
 "FSA"
 
+#' Census Division data set with geometry
+#'
+#' A data set containing the Canadian Census Division geometry shapes
+#'
+#' @format A data frame with 293 rows and 7 variables:
+#' \describe{
+#'   \item{CDNAME}{Census Division names}
+#'   \item{PRUID}{ID column for each province}
+#'   \item{rmapshaperid}{id for geometry}
+#'   \item{population_2021}{Population from 2021 Census}
+#'   \item{PT}{province or territory}
+#'   \item{PRNAME}{Province name}
+#'   \item{geometry}{map geometry}
+#'   ...
+#' }
+"CD"
+
+#' Census Sub Division data set with geometry
+#'
+#' A data set containing the Canadian Census Sub Division geometry shapes
+#'
+#' @format A data frame with 5161 rows and 9 variables:
+#' \describe{
+#'   \item{CDNAME}{Census Division names}
+#'   \item{PRUID}{ID column for each province}
+#'   \item{CDUID}{Census Division ID}
+#'   \item{CMAUID}{CMA ID}
+#'   \item{rmapshaperid}{id for geometry}
+#'   \item{population_2021}{Population from 2021 Census}
+#'   \item{PT}{province or territory}
+#'   \item{PRNAME}{Province name}
+#'   \item{geometry}{map geometry}
+#'   ...
+#' }
+"CSD"
+
 
 #' Map theme
 #'
@@ -267,6 +303,34 @@ geom_reg <- function(data = REG, fill = "region", colour = NA, size = 0.1) {
 #' @export
 geom_fsa <- function(data = FSA, fill = "PRNAME", colour = "white", size = 0.2) {
   ggplot2::geom_sf(data = data, aes(fill = data[[fill]]), color = colour, size = size)
+}
+
+#' Mapping Census Division data
+#'
+#' Maps CD data using Statistics Canada CD shape file.
+#'
+#' @param data a data set with geometry variable
+#' @param fill the color fill variable
+#' @param colour outline color, default is NA
+#' @param size size of outline
+#' @return FSA map.
+#' @export
+geom_cd <- function(data = CD, fill = "PRNAME", colour = "white", size = 0.2) {
+  ggplot2::geom_sf(data = data, aes(fill = data[[fill]], geometry = geometry), color = colour, size = size)
+}
+
+#' Mapping Census Sub Division data
+#'
+#' Maps CSD data using Statistics Canada CSD shape file.
+#'
+#' @param data a data set with geometry variable
+#' @param fill the color fill variable
+#' @param colour outline color, default is NA
+#' @param size size of outline
+#' @return FSA map.
+#' @export
+geom_csd <- function(data = CSD, fill = "PRNAME", colour = "white", size = 0.2) {
+  ggplot2::geom_sf(data = data, aes(fill = data[[fill]], geometry = geometry), color = colour, size = size)
 }
 
 
