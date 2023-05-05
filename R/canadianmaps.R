@@ -3,9 +3,9 @@ globalVariables(c("aes", '%+replace%', 'element_blank', 'unit', 'element_line', 
                   'element_text', 'element_blank', 'FSA', 'PROV', 'REG', 'X', 'Y'))
 
 
-#' Provincial data set with geometry
+#' Canadian Province Boundary Data
 #'
-#' A data set containing the Canadian province geometry shapes
+#' Provides geospatial information for all 13 Canadian provinces and territories.
 #'
 #' @format A data frame with 13 rows and 12 variables:
 #' \describe{
@@ -26,9 +26,9 @@ globalVariables(c("aes", '%+replace%', 'element_blank', 'unit', 'element_line', 
 #' @source \url{https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-2016-eng.cfm}
 "PROV"
 
-#' Regional data set with geometry
+#' Canadian Regions Boundary Data
 #'
-#' A dataset containing the Canadian province geometry shapes and set regions
+#' Provides geospatial information for all 4 regions of Canada (Central, Eastern, Western, and Northern).
 #'
 #' @format A data frame with 13 rows and 12 variables:
 #' \describe{
@@ -49,9 +49,9 @@ globalVariables(c("aes", '%+replace%', 'element_blank', 'unit', 'element_line', 
 #' @source \url{https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-2016-eng.cfm}
 "REG"
 
-#' FSA data set with geometry
+#' Canadian FSA Boundary Data
 #'
-#' A data set containing the Canadian FSA geometry shapes
+#' Provides geospatial information for all Canadian Forward sortation areas (FSA).
 #'
 #' @format A data frame with 1614 rows and 6 variables:
 #' \describe{
@@ -66,9 +66,9 @@ globalVariables(c("aes", '%+replace%', 'element_blank', 'unit', 'element_line', 
 #' @source \url{https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-2016-eng.cfm}
 "FSA"
 
-#' Census Division data set with geometry
+#' Canadian Census Division Boundary Data
 #'
-#' A data set containing the Canadian Census Division geometry shapes
+#' Provides geospatial information for all Canadian census divisions.
 #'
 #' @format A data frame with 293 rows and 7 variables:
 #' \describe{
@@ -83,9 +83,9 @@ globalVariables(c("aes", '%+replace%', 'element_blank', 'unit', 'element_line', 
 #' }
 "CD"
 
-#' Census Sub Division data set with geometry
+#'  Canadian Census Sub Division Boundary Data
 #'
-#' A data set containing the Canadian Census Sub Division geometry shapes
+#' Provides geospatial information for all Canadian census sub divisions.
 #'
 #' @format A data frame with 5161 rows and 9 variables:
 #' \describe{
@@ -103,9 +103,9 @@ globalVariables(c("aes", '%+replace%', 'element_blank', 'unit', 'element_line', 
 "CSD"
 
 
-#' Map theme
+#' Plot theme - map
 #'
-#' Blank theme for mapping.
+#' Blank theme to apply for mapping using ggplot2.
 #'
 #' @return A blank theme for ggplot
 #' @param base_size size for text
@@ -127,9 +127,9 @@ theme_map <- function(base_size=9, base_family="") { # 3
     )
 }
 
-#' Wallis graph theme
+#' Plot theme - Wallis
 #'
-#' Custom theme for graphing.
+#' Custom theme to apply for plotting using ggplot2.
 #'
 #' @return A theme for ggplot
 #' @export
@@ -236,7 +236,7 @@ scale_color_map <- function(palette, num, na.value = "grey90", rev=FALSE) { # 3
 #' @param data a data set with long and lat coordinates
 #' @param long the longitude variable name
 #' @param lat the latitude variable name
-#' @import rgdal
+#' @import
 #' @return Your coordinates transformed.
 #' @export
 coord_transform <- function(data, long, lat) { # 3
@@ -272,8 +272,8 @@ crs_coord <- function() { # 3
 #' @param size size of outline
 #' @return Provincial map.
 #' @export
-geom_prov <- function(data = PROV, fill = "PT", colour = NA, size = 0.1) {
-  ggplot2::geom_sf(data = data, aes(fill = data[[fill]]), color = colour, size = size)
+geom_prov <- function(data = PROV, fill = "PT", colour = NA, color = NA, size = 0.1, ...) {
+  ggplot2::geom_sf(data = data, aes(fill = data[[fill]]), colour = colour, color = color, size = size, ...)
 }
 
 #' Mapping regional data
@@ -313,7 +313,7 @@ geom_fsa <- function(data = FSA, fill = "PRNAME", colour = "white", size = 0.2) 
 #' @param fill the color fill variable
 #' @param colour outline color, default is NA
 #' @param size size of outline
-#' @return FSA map.
+#' @return census division map.
 #' @export
 geom_cd <- function(data = CD, fill = "PRNAME", colour = "white", size = 0.2) {
   ggplot2::geom_sf(data = data, aes(fill = data[[fill]], geometry = geometry), color = colour, size = size)
@@ -327,7 +327,7 @@ geom_cd <- function(data = CD, fill = "PRNAME", colour = "white", size = 0.2) {
 #' @param fill the color fill variable
 #' @param colour outline color, default is NA
 #' @param size size of outline
-#' @return FSA map.
+#' @return census subdivision map.
 #' @export
 geom_csd <- function(data = CSD, fill = "PRNAME", colour = "white", size = 0.2) {
   ggplot2::geom_sf(data = data, aes(fill = data[[fill]], geometry = geometry), color = colour, size = size)

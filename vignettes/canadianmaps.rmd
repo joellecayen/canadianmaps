@@ -1,0 +1,807 @@
+---
+title: "R Package: canadianmaps"
+lang: fr
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float: true
+    toc_depth: 2
+---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, out.width="100%")
+
+library(stringr)
+library(ggplot2)
+library(cowplot)
+library(kableExtra)
+library(tidyverse)
+library(canadianmaps)
+```
+
+```{css, echo=FALSE}
+
+::selection {
+  color: white;
+  background: #9fe2bf;
+}
+
+a {
+  color: #A4B99A;
+}
+
+a:hover {
+  color: #667C68;
+}
+
+code {
+  background-color: #ECEFE6;
+    border-radius: 5px;
+}
+
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    background-color: #667C68;
+}
+
+.r {
+  background-color: #F6F7F3;
+     border-radius: 8px;
+  border-color:#F6F7F3;
+}
+
+.hljs-string {
+  color: #F2A7A6;
+}
+
+.hljs-comment {
+  color: #A4B99A;
+}
+
+.hljs-keyword {
+  color: #667C68;
+}
+
+.hljs-number {
+   color: #E8615E;
+}
+
+.table-hover > tbody > tr:hover { 
+  background-color: #F6F7F3;
+}
+
+```
+
+
+<h3> Author: Joëlle Cayen</h3> 
+<a href="mailto:joelle.cayen@phac-aspc.gc.ca">joelle.cayen@phac-aspc.gc.ca</a>
+
+
+## Background
+
+This package was developed to address the gap in Canadian mapping in R. Statistics Canada releases map shape files for Provincial and Forward Sortation Area (FSA) data (among many others), however these data are difficult to manipulate and create maps with in R. The `canadianmaps` package contains three condensed datasets (using the original StatCan data) designed to map Canadian Provincial, FSA, and Regional data using regular R plotting methods (ggplot2), along with several functions to make Canadian mapping easy (i.e. transform longitude and latitude points to the corresponding coordinates systems, add labels to the centroids of map shapes, etc.).  
+
+### Existing resources
+
+#### Transforming StatCan shapefiles
+
+https://teng.pub/technical/2020/1/7/drawing-canada-maps-in-r   
+https://blog.exploratory.io/making-maps-for-canadas-provisions-and-census-divisions-in-r-c189b88ccd8a   
+
+#### mapcan package
+https://cran.r-project.org/web/packages/mapcan/vignettes/choropleth_maps_vignette.html  
+
+#### Limitations with existing methods
+- Difficult and time consuming to transform the StatCan shapefiles using R
+- Needed FSA (Forward Sortation Area) shapefile (not currently included in mapcan package)
+- Needed to overlay points (longitude/latitude) (not currently a feature in mapcan)
+- Needed to add labels to the center of each province/region (not currently a feature in mapcan)
+
+---
+
+## Installing and loading the package
+
+This package is publicly available to download on GitHub as well as on CRAN. To install and load you can run the following lines in the console:
+
+```{r install, eval=FALSE}
+devtools::install_github("joellecayen/canadianmaps")
+#or
+install.packages("canadianmaps")
+
+library(canadianmaps)
+```
+
+This package currently comes with three datasets:  
+  
+* PROV (Provincial map file)  
+* FSA (Forward Sortation Area map file)  
+* REG (Regional map file)  
+  
+The `PROV` dataset has 13 rows, one for each Province/Territory. It contains columns providing users with different options for Province/Territory names; X and Y variable columns, which represent the centroid of each Province/Territory shape (used for adding labels); and the geometry column, which contains nested lists making up the complex geometry shapes for each Province/Territory.
+
+```{r data, echo=F}
+PROV %>%
+  mutate(geometry = paste0(substr(geometry, 1, 15), "..."))%>%
+  relocate(PT, .after = PRUID) %>%
+  head()%>%
+  kbl() %>%
+  kable_styling(bootstrap_options = c("hover", "condensed"))
+```
+
+---
+
+## Overview of available functions
+
+* `theme_map()`
+* `geom_prov()`
+* `greom_reg()`
+* `geom_fsa()`
+* `label_prov()`
+* `label_reg()`
+* `text_prov()`
+* `scale_fill_map()`
+* `scale_color_map()`
+* `crs_coord()`
+* `coord_transform()`
+
+
+The `geom_prov()` function loads and maps the Provincial dataset, this is to be used in combination with `ggplot2`. `crs_coord()` contains the `crs` string which is required for mapping (this is all done behind scenes so you will not need to add anything in this function). The `theme_map()` function gives ggplot a blank canvas to map on. The `scale_fill_map()` and `scale_color_map()` functions have several custom color palettes which can be used for mapping and filling/coloring qualitative data (works with other types of graphs in `ggplot2` as well).
+
+
+### Color palettes
+
+```{r, echo=FALSE, fig.height=2.5, out.width = "100%", fig.align="center"}
+
+dat <- data.frame(x = c("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l"), y=1)
+
+
+palettes <- c("Bright", "Pastel", "Kelly", "Teal", "Beach", "Summer", "Mauve", "Anada", "Viv", "Jess", "Starbs", "Purples", "CNISP", "PHAC",  "HAI")
+
+for (i in 1:length(palettes)) {
+  
+assign(str_glue("g_{i}"), ggplot() +
+    geom_bar(aes(x=x, y=y, fill=x), data = dat, stat="identity") + # 5
+    scale_fill_map(palettes[i], 12) +
+    guides(fill = "none") +
+    ggtitle(palettes[i])+
+    theme_map() +
+      theme(plot.margin=unit(c(0.5,0.25,0.25,0.25),"cm"),
+            plot.title = element_text(size=10))
+)
+}
+
+
+plot_grid(g_1, g_2, g_3, g_4, g_5, g_6, g_7, g_8, g_9, g_10, g_11, g_12, g_13, g_14, g_15,
+          #labels = c("Bright", "Pastel", "Kelly", "CNISP", "PHAC", "Teal", "Beach", "Summer", "Mauve"),
+          #label_size = 15,
+          align="hv", ncol = 5) 
+
+
+```
+
+---
+
+## Mapping Provincial data 
+
+### Creating the base shape layer 
+
+```{r}
+library(ggplot2)
+library(canadianmaps)
+
+ggplot() +
+          geom_prov() + # load and map provincial data
+          crs_coord() + # this is required for mapping (stores the coordinate system)
+          scale_fill_map("Kelly", 13) + # palette Kelly and assigning 13 colors
+          guides(fill = "none") + # this removes the color legend
+          theme_map() # sets backgroud to blank canvas 
+
+
+```
+
+
+### Adding text 
+
+
+```{r}
+
+ggplot() +
+   geom_prov() + # load and map provincial data
+   crs_coord() + # this is required for mapping (stores the coordinate system)
+   scale_fill_map("Kelly", 13) + # palette Kelly and assigning 13 colors
+   guides(fill = "none") + # this removes the color legend
+   theme_map() + # sets backgroud to blank canvas 
+   text_prov() # default is PT
+
+
+```
+
+
+### Adding labels and outline
+
+
+```{r}
+
+ggplot() +
+   geom_prov(colour="white", size=0.2) + # Specifying a colour and size will add an outline to all the province shapes (default is NA)
+   crs_coord() + 
+   scale_fill_map("Kelly", 13) + 
+   guides(fill = "none") + 
+   theme_map() + 
+   label_prov(label="PREABBR") # I chose the column with the English abbreviations
+
+
+```
+
+---
+
+## Adding your data to the shapefile 
+
+```{r, echo=FALSE}
+library(dplyr)
+library(scales)
+
+prov <- c("BC","QC","NU","PE","SK","YT","MB","ON","NB","NT","AB","NL","NS")
+values <- c(2, 4, 1, 3, 6, 0, 3, 8, 9, 2, 1, 0, 7)
+
+data <- data.frame(prov, values)
+
+data <- data %>%
+  mutate(perc = percent(values/sum(values, na.rm=T), accuracy=1))
+
+```
+
+
+Here's an example dataset called `data` that we want to map. It has 13 rows (one for each Province/Territory) and has three variables: prov, values, and perc. 
+```{r, echo=FALSE}
+data
+```
+
+
+We're going to take our data and join it with the `PROV` dataset from the `canadianmaps` package.
+
+```{r}
+alldata <- PROV %>%
+  left_join(data, by=c("PT" = "prov")) 
+
+head(alldata)
+```
+
+
+
+Since this map is colored based on quantitative values, I decided to use the `scale_fill_continuous_sequential()` function from the `colorspace` package.
+
+```{r, out.width="100%", fig.height=4, fig.width=14, fig.align="center"}
+
+library(colorspace)
+
+```
+
+```{r, out.width="100%"}
+
+ggplot() +
+  geom_prov(alldata, fill = "values") + #changed the dataset to alldata
+  crs_coord() +
+  label_prov(alldata, label="perc") + #changed the dataset to alldata
+  scale_fill_continuous_sequential(palette = "SunsetDark", na.value="grey90") +
+  guides(fill = "none") +
+  theme_map()
+
+```
+
+
+---
+
+## Transforming your location data {.tabset}
+
+The function `coord_transform()` allows you to transform location data (longitude/latitude) to the map's coordinate system, which includes both projection and extent of the map. By default, this function uses the same projection as the `PROV` and `FSA` maps (epsg:4269). This allows us to easily transform any location data to be compatible for layering. 
+  
+The `coord_transform()` function requires three pieces of information.  
+
+1. the name of the dataset  
+2. the name of the longitude variable in quotes  
+3. the name of the latitude variable in quotes  
+
+For this example we will be using the `canada.cities` dataset from the `maps` package. The dataset is then filtered for cities with population larger than 70,000 and then piped into the `coord_transform()` function. Here we can specify the column names for our longiture and latitude variables (note that the quotation marks are necessary here).
+
+```{r}
+library(maps)
+
+cities <- canada.cities %>%
+            filter(pop > 70000) %>%
+  coord_transform("long", "lat")# this is to transform your points (quotation marks are necessary)
+
+```
+
+Once you've transformed your data using `coord_transform()` you can add it as a layer in your map using `geom_point()`. All you have to do is specify the name of the dataset and the x and y variables in the aesthetics. I've added a few extra parameters for size, color, transparency, and shape. You can also use `geom_jitter()` to avoid overlapping points. You can specify the parameters for width and height to achieve an appropriate distance between points.
+
+### Map
+
+```{r, echo=F, out.width="100%"}
+
+ggplot() +
+  geom_prov() + 
+  crs_coord() + 
+  geom_jitter(data=cities, aes(x=long, y=lat), size = 2, color = "black", alpha=0.5, shape = 18, position = position_jitter(width = 70000, height = 70000)) + # adding points
+  label_prov() + 
+  scale_fill_map("Kelly", 13) + 
+  guides(fill = "none") + 
+  theme_map()
+
+```
+
+### Data
+
+```{r, out.width="100%"}
+
+head(cities)
+
+```
+
+<br>   
+<br>  
+<br>  
+<br>  
+<br> 
+<br>  
+
+### Code
+
+```{r, eval=F, out.width="100%"}
+
+ggplot() +
+  geom_prov() + 
+  crs_coord() + 
+  geom_jitter(data=cities, aes(x=long, y=lat), size = 2, color = "black", alpha=0.5, shape = 18, position = position_jitter(width = 70000, height = 70000)) + # adding points
+  label_prov() + 
+  scale_fill_map("Kelly", 13) + 
+  guides(fill = "none") + 
+  theme_map()
+
+```
+  
+<br>  
+<br>  
+<br>  
+<br>   
+<br>  
+<br>  
+<br>  
+<br> 
+<br>  
+<br> 
+
+
+## {.unlisted .unnumbered}  
+ 
+
+---
+
+
+## Point shape, size, color, and opacity {.tabset}
+
+If you want to color your shapes based on another variable, you can do so by specifying color in the aesthetics of `geom_point()` or `geom_jitter()` and adding `scale_color_manual()`. Here I decided to change the shape, size, color, and alpha (transparency) all based on the column `type` which has three values.
+
+### Map
+```{r, echo=F, out.width="100%"}
+
+cities <- canada.cities %>%
+            filter(pop > 70000) %>%
+  coord_transform("long", "lat") %>% # this is to transform your points (quotation marks are necessary)
+  mutate(type = recode(capital, 
+                         "0" = "Big city",
+                         "1" = "National capital",
+                         "2" = "Province capital" )) # created this variable for mapping in the next example
+
+ggplot() +
+  geom_prov() + # province shapes
+  crs_coord() + 
+  geom_jitter(data=cities, aes(x=long, y=lat, alpha=type, color=type, shape=type, size = type), position = position_jitter(width = 60000, height = 60000)) +
+  scale_alpha_manual(values = c(0.6, 1, 0.6))+ # transparency for the type values
+  scale_shape_manual(values=c(19, 18, 18))+  # shape for the type values
+  scale_color_manual(values=c('#373659', '#F24333', '#F24333'))+  # color for the type values
+  scale_size_manual(values=c(2, 6, 4))+  # size for the type values
+  label_prov() + # province labels
+  scale_fill_map("Viv", 36, rev=F) + 
+  guides(fill = "none") + 
+  theme_map() +
+  theme(legend.position = c(0.75, 0.6),
+        legend.title = element_blank())
+
+```
+
+### Data
+
+```{r, out.width="100%"}
+cities <- canada.cities %>%
+            filter(pop > 70000) %>%
+  coord_transform("long", "lat") %>% # this is to transform your points (quotation marks are necessary)
+  mutate(type = recode(capital, 
+                         "0" = "Big city",
+                         "1" = "National capital",
+                         "2" = "Province capital" )) # created the variable type for our shape, alpha, size, and color aesthetics
+head(cities)
+
+```
+
+<br>  
+<br>  
+
+### Code
+
+```{r, eval=F, out.width="100%"}
+
+ggplot() +
+  geom_prov() + # province shapes
+  crs_coord() + 
+  geom_jitter(data=cities, aes(x=long, y=lat, alpha=type, color=type, shape=type, size = type), position = position_jitter(width = 60000, height = 60000)) +
+  scale_alpha_manual(values = c(0.6, 1, 0.6))+ # transparency for the type values
+  scale_shape_manual(values=c(19, 18, 18))+  # shape for the type values
+  scale_color_manual(values=c('#373659', '#F24333', '#F24333'))+  # color for the type values
+  scale_size_manual(values=c(2, 6, 4))+  # size for the type values
+  label_prov() + # province labels
+  scale_fill_map("Viv", 36, rev=F) + 
+  guides(fill = "none") + 
+  theme_map() +
+  theme(legend.position = c(0.75, 0.6),
+        legend.title = element_blank())
+```
+
+<br>  
+<br>  
+<br>  
+<br>  
+<br>  
+<br>   
+<br> 
+
+
+
+## {.unlisted .unnumbered}  
+ 
+
+---
+
+## Mapping FSA data
+
+The function `geom_fsa()` maps FSA data from StatCan. The default is to color based on each province. Similar to before you can merge your own data based on FSA columns to the `FSA` dataset. For now let's just take a look at the default FSA map. 
+
+### FSA base layer 
+
+```{r,  out.width="100%"}
+
+ggplot() +
+  geom_fsa() + 
+  crs_coord() + 
+  scale_fill_map("Kelly", 13) + 
+  guides(fill = "none") + 
+  theme_map() 
+
+```
+
+
+### FSA with labels 
+
+Now let's add some labels. Using the `text_prov()` function we will add labels in the center of each province. Similar to before, you can merge your own data with the `PROV` dataset to achieve different labels. For now we'll start with adding the province codes which is the default.
+
+
+```{r, out.width="100%"}
+
+ggplot() +
+  geom_fsa() + 
+  crs_coord() + 
+  text_prov() + # adding labels from the PROV dataset (default is two digit codes)
+  scale_fill_map("Kelly", 13) + 
+  guides(fill = "none") + 
+  theme_map() 
+
+```
+
+
+### Adding your own data {.tabset}
+
+```{r, echo=FALSE, message=FALSE}
+
+fsa <- c("J0K",	"K0K",	"L5M",	"L9T",	"K0A",	"L4N",	"L0R",	"V3S",	"V3W",	"S0K",	"L6R",	"L6Y",	"G0A",	"L6A",	"L5N",	"T0H",	"N0G",	"G0R",	"L6P",	"T3K",	"L7A",	"N0B",	"V0N",	"V4N",	"T3J",	"L4J",	"J0L",	"M2N",	"K0L",	"T3H",	"L4C",	"T5T",	"K2J",	"T2Z",	"L4H",	"G0S",	"T0M",	"L6X",	"V0R",	"M1B",	"V0E",	"T8N",	"L6M",	"N0M",	"T0B",	"S0G",	"L5B",	"J7V",	"T0C",	"J0B",	"L3R",	"J3Y",	"T2Y",	"T0L",	"L6H",	"T2A",	"G0L",	"T0A",	"T3G",	"G0X",	"M2J",	"V3R",	"T1Y",	"V3B",	"L3S",	"V2T",	"M9V",	"T0K",	"L4G",	"L0S",	"K1V",	"M1V",	"K4A",	"L4L",	"V0H",	"L6S",	"T3A",	"V0J",	"S0A",	"R0C",	"J0H",	"L4E",	"N0P",	"K0C",	"L1V",	"T6L",	"L6C",	"T6W",	"L5V",	"T0J",	"L3T",	"L1T",	"S0J",	"P0M",	"J0N",	"K0M",	"K2G",	"M5V",	"V3V",	"V2S")
+
+data <- data.frame(fsa)
+
+data <- data %>%
+  mutate(val = row.names(.))
+
+  
+```
+
+Using a mini example dataset called `data` we can map the top 100 FSA's based on population size. We do this by joining our dataset `data` with the `FSA` dataset from the `canadianmaps` package.
+
+#### Map
+
+```{r, echo=F, out.width="100%"}
+# Top 100 FSA's with largest population
+myFSA <- FSA %>%
+left_join(data, by = c("CFSAUID" = "fsa")) %>%
+  mutate(PT = case_when(!is.na(val) ~ PRNAME,
+                        TRUE ~ NA_character_))
+
+ggplot() +
+  geom_fsa(myFSA, fill="PT", colour= NA) + #remove lines by specifying color = NA
+  crs_coord() + 
+  scale_fill_map("Starbs", 8, na.value = "grey97") + 
+  guides(fill = "none") + 
+  theme_map() 
+
+```
+
+<br>  
+<br>
+
+
+#### Data
+```{r, echo=T, out.width="100%"}
+head(data)
+
+myFSA <- FSA %>%
+left_join(data, by = c("CFSAUID" = "fsa")) %>%
+  mutate(PT = case_when(!is.na(val) ~ PRNAME,
+                        TRUE ~ NA_character_))
+
+head(myFSA)
+```
+
+#### Code
+
+```{r, eval=F, out.width="100%"}
+
+myFSA <- FSA %>%
+left_join(data, by = c("CFSAUID" = "fsa")) %>%
+  mutate(PT = case_when(!is.na(val) ~ PRNAME,
+                        TRUE ~ NA_character_))
+
+ggplot() +
+  geom_fsa(myFSA, fill="PT", colour= NA) + #remove lines by specifying color = NA
+  crs_coord() + 
+  scale_fill_map("Starbs", 8, na.value = "grey97") + 
+  guides(fill = "none") + 
+  theme_map() 
+
+```
+
+
+<br>  
+<br>  
+<br>  
+<br>  
+<br>  
+<br>  
+<br>  
+<br>  
+<br>  
+<br> 
+
+## {.unlisted .unnumbered}  
+ 
+
+---  
+
+## Mapping Regional data 
+
+The third dataset in the `canadianmaps` package is a Regional dataset called `REG`. This file was made using the provincial shapefile, meaning there are still 13 shapes however they are grouped by region. The functions `geom_reg()` and `label_reg()` are used to create these Regional maps. 
+
+Note: If you specify a `colour` in the `geom_reg()` function it will outline every Province (not Region). You can also change the `size` of the line, default is 0.1.
+
+### Default Regions 
+
+```{r,  out.width="90%", fig.align = "center"}
+
+ggplot() +
+  geom_reg(colour="white") + # adding an outline colour (default is NA)
+  crs_coord() + 
+  label_reg(size=5, colour = "black") +
+  scale_fill_map("Starbs", 5, rev=T) + 
+  guides(fill = "none") + 
+  theme_map() 
+
+```
+
+
+### Creating your own Regions {.tabset}
+
+Using the `REG` dataset, you can create your own Regions by assigning Provinces/Territories a new value. Note that if you wish to add labels, you will need to choose points on the map yourself (https://www.latlong.net/) and transform them using `coord_transform()`. You could then use `geom_text()` from the `ggplot2` package to add your labels. 
+
+
+#### Map
+```{r, echo=F, out.width="90%", fig.align = "center"}
+
+myreg <- REG %>%
+  mutate(region2 = case_when(PT %in% c("BC", "AB") ~ "West",
+                             PT %in% c("MB", "SK") ~ "Man-Sask",
+                             PT %in% c("ON") ~ "Ontario",
+                             PT %in% c("QC") ~ "Quebec",
+                             TRUE ~ region)) %>%
+  mutate(Proportion = case_when(region2 == "West" ~ 0.4,
+                                region2 == "Man-Sask" ~ 0.6,
+                                region2 == "Ontario" ~ 0.8,
+                                region2 == "Quebec" ~ 0.5,
+                                region2 == "Eastern" ~ 0.2,
+                                region2 == "Northern" ~ 0.1
+                                )) 
+
+myreg_labels <- myreg %>%
+  as_tibble()%>%
+  dplyr::select(region2, Proportion)%>%
+  mutate(latitude = case_when(region2 == "West" ~ 54.897934,
+                                region2 == "Man-Sask" ~ 55.549611,
+                                region2 == "Ontario" ~ 50.926410,
+                                region2 == "Quebec" ~ 51.531814,
+                                region2 == "Eastern" ~ 48.599317,
+                                region2 == "Northern" ~ 65.397728
+                                ),
+         longitude = case_when(region2 == "West" ~ -119.777942,
+                                region2 == "Man-Sask" ~ -101.572435,
+                                region2 == "Ontario" ~ -87.324647,
+                                region2 == "Quebec" ~ -71.654470,
+                                region2 == "Eastern" ~ -55.399047,
+                                region2 == "Northern" ~ -115.797786
+                                )) %>%
+  coord_transform("longitude", "latitude") %>%
+  unique()
+
+
+ggplot() +
+  geom_reg(data=myreg, fill="Proportion") + 
+  crs_coord() + 
+  geom_text(data=myreg_labels, aes(x=longitude, y=latitude, label=region2))+
+  scale_fill_continuous_sequential(limits = c(0,1),palette = "SunsetDark", na.value="grey90", label = scales::percent) +
+  theme_map() +
+  theme(legend.position = c(0.9, 0.6)) +
+   labs(fill="Proportion")
+
+
+```
+
+ 
+
+#### Code
+
+```{r, eval=F, out.width="90%", fig.align = "center"}
+
+myreg <- REG %>%
+  mutate(region2 = case_when(PT %in% c("BC", "AB") ~ "West",
+                             PT %in% c("MB", "SK") ~ "Man-Sask",
+                             PT %in% c("ON") ~ "Ontario",
+                             PT %in% c("QC") ~ "Quebec",
+                             TRUE ~ region)) %>%
+  mutate(Proportion = case_when(region2 == "West" ~ 0.4,
+                                region2 == "Man-Sask" ~ 0.6,
+                                region2 == "Ontario" ~ 0.8,
+                                region2 == "Quebec" ~ 0.5,
+                                region2 == "Eastern" ~ 0.2,
+                                region2 == "Northern" ~ 0.1
+                                )) 
+
+# In order to transform the latitude/longitude points, you need to convert the complex geometry dataset to a regular dataset/tibble
+myreg_labels <- myreg %>%
+  as_tibble()%>% 
+  dplyr::select(region2, Proportion)%>%
+  mutate(latitude = case_when(region2 == "West" ~ 54.897934,
+                                region2 == "Man-Sask" ~ 55.549611,
+                                region2 == "Ontario" ~ 50.926410,
+                                region2 == "Quebec" ~ 51.531814,
+                                region2 == "Eastern" ~ 48.599317,
+                                region2 == "Northern" ~ 65.397728
+                                ),
+         longitude = case_when(region2 == "West" ~ -119.777942,
+                                region2 == "Man-Sask" ~ -101.572435,
+                                region2 == "Ontario" ~ -87.324647,
+                                region2 == "Quebec" ~ -71.654470,
+                                region2 == "Eastern" ~ -55.399047,
+                                region2 == "Northern" ~ -115.797786
+                                )) %>%
+  coord_transform("longitude", "latitude") %>%
+  unique()
+
+
+ggplot() +
+  geom_reg(data=myreg, fill="Proportion") + 
+  crs_coord() + 
+  geom_text(data=myreg_labels, aes(x=longitude, y=latitude, label=region2))+
+  scale_fill_continuous_sequential(limits = c(0,1),palette = "SunsetDark", na.value="grey90", label = scales::percent) +
+  theme_map() +
+  theme(legend.position = c(0.9, 0.6)) +
+   labs(fill="Proportion")
+```
+
+
+
+## {.unlisted .unnumbered}  
+ 
+
+---
+
+
+## Graphing {.tabset}
+
+The functions `scale_fill_map()` and  `scale_color_map()` can also be used with other plot types in `ggplot2`.
+
+### Graph
+
+```{r, echo=F, out.width="100%"}
+canada.cities %>%
+  filter(country.etc != "Canada")%>%
+  mutate(name = str_to_sentence(word(name)))%>%
+  arrange(desc(pop))%>%
+  slice_max(order_by = pop, n = 10)%>%
+  mutate(label = str_glue("{round(pop/1000000, 1)} M"))%>%
+  
+  ggplot() +
+    aes(x=reorder(name, desc(pop)), y = pop, fill=country.etc)+
+    geom_col(alpha = 0.8)+
+    geom_text(aes(label=label), vjust = 1.2, color = "white")+
+    scale_fill_map("Bright", 5) +
+  scale_y_continuous(labels = scales::comma)+
+    theme_wallis() +
+  ggtitle("Ten Largest Canadian Citites") +
+    xlab("")+
+    ylab("Population")+
+    labs(fill = "")+
+    theme(legend.position = c(0.7, 0.95),
+          legend.direction = "horizontal",
+          legend.background = element_rect(fill=NA),
+          axis.text.x = element_text(angle = 70, hjust = 1.1))
+
+```
+
+
+
+### Code
+
+```{r, eval=F, out.width="100%"}
+library(maps)
+
+canada.cities %>%
+  filter(country.etc != "Canada")%>%
+  mutate(name = str_to_sentence(word(name)))%>%
+  arrange(desc(pop))%>%
+  slice_max(order_by = pop, n = 10)%>%
+  mutate(label = str_glue("{round(pop/1000000, 1)} M"))%>%
+  
+  ggplot() +
+    aes(x=reorder(name, desc(pop)), y = pop, fill=country.etc)+
+    geom_col(alpha = 0.8)+
+    geom_text(aes(label=label), vjust = 1.2, color = "white")+
+    scale_fill_map("Bright", 5) +
+  scale_y_continuous(labels = scales::comma)+
+    theme_wallis() +
+  ggtitle("Ten Largest Canadian Citites") +
+    xlab("")+
+    ylab("Population")+
+    labs(fill = "")+
+    theme(legend.position = c(0.7, 0.95),
+          legend.direction = "horizontal",
+          legend.background = element_rect(fill=NA),
+          axis.text.x = element_text(angle = 70, hjust = 1.1))
+
+```
+
+
+
+<br>
+<br>
+<br>
+<br>
+  
+
+## {.unlisted .unnumbered}  
+
+
+<br> 
+
+
+---
+
+## Thank you!!
+
+Huge thank you to the entire CNISP team for your contributions to the package and continued support! Special thanks to Linda Pelude, Wallis Rudnick, Anada Silva, Vivienne Steele, Kelly Choi, Robyn Mitchell, Jessica Bartoszko, Diane Lee and William Zhang.
+
+

@@ -1,13 +1,13 @@
 Package: canadianmaps
-Title: Canadian Mapping Made Easy
-Version: 1.0.0
+Title: Effortlessly create stunning maps with canadianmaps
+Version: 1.2.0
 Authors@R: 
     person(given = "Joelle",
            family = "Cayen",
            role = c("aut", "cre"),
            email = "joelle.cayen@phac-aspc.gc.ca",
            comment = "")
-Description: Several functions to make mapping provincial, regional, and forward sortation area data easy using 'ggplot2'.
+Description: canadianmaps is an R package that provides simple and seamless access to a variety of StatsCan shapefiles for mapping Canadian provinces, regions, forward sortation areas, census divisions, and subdivisions using the popular ggplot2 package.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -16,12 +16,13 @@ RoxygenNote: 7.2.0
 Imports: 
     ggplot2,
     sp,
-    rgdal,
     ggrepel,
     RColorBrewer,
     dplyr
 Depends: 
     R (>= 2.10)
-Suggests: 
+Suggests:     
+    knitr, rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+VignetteBuilder: knitr
