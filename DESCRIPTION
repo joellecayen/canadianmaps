@@ -19,6 +19,7 @@ BugReports: https://github.com/joellecayen/issues
 Imports: 
     ggplot2,
     sp,
+    sf,
     ggrepel,
     RColorBrewer,
     dplyr

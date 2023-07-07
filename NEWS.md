@@ -4,5 +4,5 @@
 
 * Added CD & CSD data files (Census division and subdivisions)
 * Added geometry functions for both new data files
-* Removed rgdal from imports
+* Removed rgdal from imports and added sf
 
