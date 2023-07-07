@@ -23,7 +23,6 @@ globalVariables(c("aes", '%+replace%', 'element_blank', 'unit', 'element_line', 
 #'   \item{geometry}{map geometry}
 #'   ...
 #' }
-#' @source \url{https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-2016-eng.cfm}
 "PROV"
 
 #' Canadian Regions Boundary Data
@@ -46,7 +45,6 @@ globalVariables(c("aes", '%+replace%', 'element_blank', 'unit', 'element_line', 
 #'   \item{geometry}{map geometry}
 #'   ...
 #' }
-#' @source \url{https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-2016-eng.cfm}
 "REG"
 
 #' Canadian FSA Boundary Data
@@ -63,7 +61,6 @@ globalVariables(c("aes", '%+replace%', 'element_blank', 'unit', 'element_line', 
 #'   \item{geometry}{map geometry}
 #'   ...
 #' }
-#' @source \url{https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-2016-eng.cfm}
 "FSA"
 
 #' Canadian Census Division Boundary Data

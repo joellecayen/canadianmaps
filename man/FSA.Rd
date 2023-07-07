@@ -16,9 +16,6 @@ A data frame with 1614 rows and 6 variables:
 ...
 }
 }
-\source{
-\url{https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-2016-eng.cfm}
-}
 \usage{
 FSA
 }
