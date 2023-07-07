@@ -1,6 +1,6 @@
 Package: canadianmaps
 Title: Effortlessly create stunning maps with canadianmaps
-Version: 1.2.0
+Version: 1.3.0
 Authors@R: 
     person(given = "Joelle",
            family = "Cayen",
