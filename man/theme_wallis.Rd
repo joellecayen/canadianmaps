@@ -2,7 +2,7 @@
 % Please edit documentation in R/canadianmaps.R
 \name{theme_wallis}
 \alias{theme_wallis}
-\title{Wallis graph theme}
+\title{Plot theme - Wallis}
 \usage{
 theme_wallis()
 }
@@ -10,5 +10,5 @@ theme_wallis()
 A theme for ggplot
 }
 \description{
-Custom theme for graphing.
+Custom theme to apply for plotting using ggplot2.
 }

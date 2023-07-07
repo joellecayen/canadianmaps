@@ -3,7 +3,7 @@
 \docType{data}
 \name{CD}
 \alias{CD}
-\title{Census Division data set with geometry}
+\title{Canadian Census Division Boundary Data}
 \format{
 A data frame with 293 rows and 7 variables:
 \describe{
@@ -21,6 +21,6 @@ A data frame with 293 rows and 7 variables:
 CD
 }
 \description{
-A data set containing the Canadian Census Division geometry shapes
+Provides geospatial information for all Canadian census divisions.
 }
 \keyword{datasets}

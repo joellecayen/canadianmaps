@@ -2,7 +2,7 @@
 % Please edit documentation in R/canadianmaps.R
 \name{theme_map}
 \alias{theme_map}
-\title{Map theme}
+\title{Plot theme - map}
 \usage{
 theme_map(base_size = 9, base_family = "")
 }
@@ -15,5 +15,5 @@ theme_map(base_size = 9, base_family = "")
 A blank theme for ggplot
 }
 \description{
-Blank theme for mapping.
+Blank theme to apply for mapping using ggplot2.
 }

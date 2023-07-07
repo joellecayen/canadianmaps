@@ -16,7 +16,7 @@ geom_csd(data = CSD, fill = "PRNAME", colour = "white", size = 0.2)
 \item{size}{size of outline}
 }
 \value{
-FSA map.
+census subdivision map.
 }
 \description{
 Maps CSD data using Statistics Canada CSD shape file.

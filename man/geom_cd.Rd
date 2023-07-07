@@ -16,7 +16,7 @@ geom_cd(data = CD, fill = "PRNAME", colour = "white", size = 0.2)
 \item{size}{size of outline}
 }
 \value{
-FSA map.
+census division map.
 }
 \description{
 Maps CD data using Statistics Canada CD shape file.

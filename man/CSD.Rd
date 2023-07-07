@@ -3,7 +3,7 @@
 \docType{data}
 \name{CSD}
 \alias{CSD}
-\title{Census Sub Division data set with geometry}
+\title{Canadian Census Sub Division Boundary Data}
 \format{
 A data frame with 5161 rows and 9 variables:
 \describe{
@@ -23,6 +23,6 @@ A data frame with 5161 rows and 9 variables:
 CSD
 }
 \description{
-A data set containing the Canadian Census Sub Division geometry shapes
+Provides geospatial information for all Canadian census sub divisions.
 }
 \keyword{datasets}

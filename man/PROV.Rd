@@ -3,7 +3,7 @@
 \docType{data}
 \name{PROV}
 \alias{PROV}
-\title{Provincial data set with geometry}
+\title{Canadian Province Boundary Data}
 \format{
 A data frame with 13 rows and 12 variables:
 \describe{
@@ -29,6 +29,6 @@ A data frame with 13 rows and 12 variables:
 PROV
 }
 \description{
-A data set containing the Canadian province geometry shapes
+Provides geospatial information for all 13 Canadian provinces and territories.
 }
 \keyword{datasets}

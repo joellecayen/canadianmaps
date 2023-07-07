@@ -3,7 +3,7 @@
 \docType{data}
 \name{FSA}
 \alias{FSA}
-\title{FSA data set with geometry}
+\title{Canadian FSA Boundary Data}
 \format{
 A data frame with 1614 rows and 6 variables:
 \describe{
@@ -23,6 +23,6 @@ A data frame with 1614 rows and 6 variables:
 FSA
 }
 \description{
-A data set containing the Canadian FSA geometry shapes
+Provides geospatial information for all Canadian Forward sortation areas (FSA).
 }
 \keyword{datasets}

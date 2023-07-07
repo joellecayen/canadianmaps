@@ -1,13 +1,13 @@
 # canadianmaps testing #
 
-context("check-functions")  # The file is called "test-functions.R"
+#context("check-functions")  # The file is called "test-functions.R"
 library(testthat)        # load testthat package
 library(canadianmaps)    # load my package
 
 
 
 #scale_fill_map
-test_that("scale_fill_map() returns a ggplot manual fill object", {
+test_that("check-functions: scale_fill_map() returns a ggplot manual fill object", {
 
   output <- scale_fill_map(palette = "Kelly", num = 5)
 
@@ -16,7 +16,7 @@ test_that("scale_fill_map() returns a ggplot manual fill object", {
 })
 
 #scale_color_map
-test_that("scale_color_map() returns a ggplot manual fill object", {
+test_that("check-functions: scale_color_map() returns a ggplot manual fill object", {
 
   output <- scale_color_map(palette = "Kelly", num = 5)
 
@@ -26,7 +26,7 @@ test_that("scale_color_map() returns a ggplot manual fill object", {
 
 
 #coord_transform
-test_that("coord_transform() returns a dataframe", {
+test_that("check-functions: coord_transform() returns a dataframe", {
 
   lat <- c(2,3,4)
   long <- c(5,6,7)
@@ -42,7 +42,7 @@ test_that("coord_transform() returns a dataframe", {
 })
 
 #FSA
-test_that("FSA returns a dataframe", {
+test_that("check-functions: FSA returns a dataframe", {
 
   output <- FSA
 
@@ -51,7 +51,7 @@ test_that("FSA returns a dataframe", {
 })
 
 #PROV
-test_that("PROV returns a dataframe", {
+test_that("check-functions: PROV returns a dataframe", {
 
   output <- PROV
 
@@ -60,7 +60,7 @@ test_that("PROV returns a dataframe", {
 })
 
 #REG
-test_that("REG returns a dataframe", {
+test_that("check-functions: REG returns a dataframe", {
 
   output <- REG
 

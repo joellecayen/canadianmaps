@@ -1,3 +1,20 @@
+# Resubmission 2023-07-07
+## R CMD check results
+
+0 errors v | 0 warnings v | 0 notes v
+
+## Test environments
+- R-hub windows-x86_64-devel (r-devel)
+- R-hub ubuntu-gcc-release (r-release)
+- R-hub fedora-clang-devel (r-devel)
+
+## Spell check
+devtools::spell_check()
+#### COMMENTS
+All of the flagged words have been double checked are are spelled correctly.
+
+
+# Initial release
 ## R CMD check results
 
 0 errors | 0 warnings | 2 notes

@@ -1,6 +1,6 @@
 
 globalVariables(c("aes", '%+replace%', 'element_blank', 'unit', 'element_line', 'element_rect',
-                  'element_text', 'element_blank', 'FSA', 'PROV', 'REG', 'X', 'Y'))
+                  'element_text', 'element_blank', 'FSA', 'PROV', 'REG', 'CD', 'CSD','X', 'Y'))
 
 
 #' Canadian Province Boundary Data
@@ -236,7 +236,6 @@ scale_color_map <- function(palette, num, na.value = "grey90", rev=FALSE) { # 3
 #' @param data a data set with long and lat coordinates
 #' @param long the longitude variable name
 #' @param lat the latitude variable name
-#' @import
 #' @return Your coordinates transformed.
 #' @export
 coord_transform <- function(data, long, lat) { # 3
@@ -272,8 +271,8 @@ crs_coord <- function() { # 3
 #' @param size size of outline
 #' @return Provincial map.
 #' @export
-geom_prov <- function(data = PROV, fill = "PT", colour = NA, color = NA, size = 0.1, ...) {
-  ggplot2::geom_sf(data = data, aes(fill = data[[fill]]), colour = colour, color = color, size = size, ...)
+geom_prov <- function(data = PROV, fill = "PT", colour = NA, size = 0.1) {
+  ggplot2::geom_sf(data = data, aes(fill = data[[fill]]), colour = colour, size = size)
 }
 
 #' Mapping regional data
@@ -316,7 +315,7 @@ geom_fsa <- function(data = FSA, fill = "PRNAME", colour = "white", size = 0.2) 
 #' @return census division map.
 #' @export
 geom_cd <- function(data = CD, fill = "PRNAME", colour = "white", size = 0.2) {
-  ggplot2::geom_sf(data = data, aes(fill = data[[fill]], geometry = geometry), color = colour, size = size)
+  ggplot2::geom_sf(data = data, aes(fill = data[[fill]]), color = colour, size = size)
 }
 
 #' Mapping Census Sub Division data
@@ -330,7 +329,7 @@ geom_cd <- function(data = CD, fill = "PRNAME", colour = "white", size = 0.2) {
 #' @return census subdivision map.
 #' @export
 geom_csd <- function(data = CSD, fill = "PRNAME", colour = "white", size = 0.2) {
-  ggplot2::geom_sf(data = data, aes(fill = data[[fill]], geometry = geometry), color = colour, size = size)
+  ggplot2::geom_sf(data = data, aes(fill = data[[fill]]), color = colour, size = size)
 }
 
 

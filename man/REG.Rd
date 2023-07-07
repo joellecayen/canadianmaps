@@ -3,7 +3,7 @@
 \docType{data}
 \name{REG}
 \alias{REG}
-\title{Regional data set with geometry}
+\title{Canadian Regions Boundary Data}
 \format{
 A data frame with 13 rows and 12 variables:
 \describe{
@@ -29,6 +29,6 @@ A data frame with 13 rows and 12 variables:
 REG
 }
 \description{
-A dataset containing the Canadian province geometry shapes and set regions
+Provides geospatial information for all 4 regions of Canada (Central, Eastern, Western, and Northern).
 }
 \keyword{datasets}
