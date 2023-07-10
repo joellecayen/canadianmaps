@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "joelle.cayen@phac-aspc.gc.ca",
            comment = "")
-Description: An R package that provides simple and seamless access to a variety of StatCan shapefiles for mapping Canadian provinces, regions, forward sortation areas, census divisions, and subdivisions using the popular ggplot2 package.
+Description: Simple and seamless access to a variety of 'StatCan' shapefiles for mapping Canadian provinces, regions, forward sortation areas, census divisions, and subdivisions using the popular 'ggplot2' package.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
