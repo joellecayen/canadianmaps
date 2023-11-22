@@ -329,7 +329,7 @@ geom_fsa <- function(data = FSA, fill = "PRNAME", colour = "white", size = 0.2) 
 #' @param size size of outline
 #' @return HR map.
 #' @export
-geom_hr <- function(data = FSA, fill = "PRNAME", colour = "white", size = 0.2) {
+geom_hr <- function(data = HR, fill = "PRNAME", colour = "white", size = 0.2) {
   ggplot2::geom_sf(data = data, aes(fill = data[[fill]]), color = colour, size = size)
 }
 
