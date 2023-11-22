@@ -63,6 +63,24 @@ globalVariables(c("aes", '%+replace%', 'element_blank', 'unit', 'element_line', 
 #' }
 "FSA"
 
+#' Canadian HR Boundary Data
+#'
+#' Provides geospatial information for all Health Regions areas (HR).
+#'
+#' @format A data frame with 104 rows and 8 variables:
+#' \describe{
+#'   \item{HRID}{ID column for each HR code}
+#'   \item{HRENGNAME}{Health Region english name}
+#'   \item{HRFRNAME}{Health Region french name}
+#'   \item{rmapshaperid}{id for geometry}
+#'   \item{geometry}{map geometry}
+#'   \item{PT}{province or territory}
+#'   \item{PRNAME}{Province name}
+#'   \item{PRUID}{ID column for each province}
+#'   ...
+#' }
+"HR"
+
 #' Canadian Census Division Boundary Data
 #'
 #' Provides geospatial information for all Canadian census divisions.
@@ -298,6 +316,20 @@ geom_reg <- function(data = REG, fill = "region", colour = NA, size = 0.1) {
 #' @return FSA map.
 #' @export
 geom_fsa <- function(data = FSA, fill = "PRNAME", colour = "white", size = 0.2) {
+  ggplot2::geom_sf(data = data, aes(fill = data[[fill]]), color = colour, size = size)
+}
+
+#' Mapping HR data
+#'
+#' Maps HR data using Statistics Canada HR shape file.
+#'
+#' @param data a data set with geometry variable
+#' @param fill the color fill variable
+#' @param colour outline color, default is NA
+#' @param size size of outline
+#' @return HR map.
+#' @export
+geom_hr <- function(data = FSA, fill = "PRNAME", colour = "white", size = 0.2) {
   ggplot2::geom_sf(data = data, aes(fill = data[[fill]]), color = colour, size = size)
 }
 
