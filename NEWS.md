@@ -1,4 +1,4 @@
-# canadianmaps 1.3.0
+# canadianmaps 1.4.0
 
 * Added a `NEWS.md` file to track changes to the package.
 
