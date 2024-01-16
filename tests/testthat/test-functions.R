@@ -11,8 +11,11 @@ test_that("check-functions: scale_fill_map() returns a ggplot manual fill object
 
   output <- scale_fill_map(palette = "Kelly", num = 5)
 
-  expect_equal(output$scale_name, "manual")
-
+  expect_s3_class(output, "ScaleDiscrete")
+  expect_equal(
+    output$call,
+    quote(ggplot2::scale_fill_manual(values = mycolours, na.value = na.value))
+  )
 })
 
 #scale_color_map
@@ -20,7 +23,11 @@ test_that("check-functions: scale_color_map() returns a ggplot manual fill objec
 
   output <- scale_color_map(palette = "Kelly", num = 5)
 
-  expect_equal(output$scale_name, "manual")
+  expect_s3_class(output, "ScaleDiscrete")
+  expect_equal(
+    output$call,
+    quote(ggplot2::scale_color_manual(values = mycolours, na.value = na.value))
+  )
 
 })
 
