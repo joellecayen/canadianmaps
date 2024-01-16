@@ -7,27 +7,21 @@ library(canadianmaps)    # load my package
 
 
 #scale_fill_map
-test_that("check-functions: scale_fill_map() returns a ggplot manual fill object", {
+test_that("check-functions: scale_fill_map() behaves like a ggplot manual fill object", {
 
   output <- scale_fill_map(palette = "Kelly", num = 5)
-
-  expect_s3_class(output, "ScaleDiscrete")
-  expect_equal(
-    output$call,
-    quote(ggplot2::scale_fill_manual(values = mycolours, na.value = na.value))
-  )
+  output$train(LETTERS[1:5])
+  values <- output$map(c(LETTERS[1:3], NA))
+  expect_equal(values, c("#B0DFE5", "#D9EEB4", "#FDB462", "grey90"))
 })
 
 #scale_color_map
-test_that("check-functions: scale_color_map() returns a ggplot manual fill object", {
+test_that("check-functions: scale_color_map() behaves like a ggplot manual fill object", {
 
   output <- scale_color_map(palette = "Kelly", num = 5)
-
-  expect_s3_class(output, "ScaleDiscrete")
-  expect_equal(
-    output$call,
-    quote(ggplot2::scale_color_manual(values = mycolours, na.value = na.value))
-  )
+  output$train(LETTERS[1:5])
+  values <- output$map(c(LETTERS[1:3], NA))
+  expect_equal(values, c("#B0DFE5", "#D9EEB4", "#FDB462", "grey90"))
 
 })
 
