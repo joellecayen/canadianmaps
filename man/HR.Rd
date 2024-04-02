@@ -10,7 +10,7 @@ A data frame with 104 rows and 8 variables:
 \item{HRID}{ID column for each HR code}
 \item{HRENGNAME}{Health Region english name}
 \item{HRFRNAME}{Health Region french name}
-\item{rmapshaperid}{id for geometry}
+\item{rmapshapeid}{id for geometry}
 \item{geometry}{map geometry}
 \item{PT}{province or territory}
 \item{PRNAME}{Province name}
