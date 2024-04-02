@@ -72,7 +72,7 @@ globalVariables(c("aes", '%+replace%', 'element_blank', 'unit', 'element_line', 
 #'   \item{HRID}{ID column for each HR code}
 #'   \item{HRENGNAME}{Health Region english name}
 #'   \item{HRFRNAME}{Health Region french name}
-#'   \item{rmapshaperid}{id for geometry}
+#'   \item{rmapshapeid}{id for geometry}
 #'   \item{geometry}{map geometry}
 #'   \item{PT}{province or territory}
 #'   \item{PRNAME}{Province name}
