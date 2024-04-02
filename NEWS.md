@@ -1,5 +1,8 @@
 # canadianmaps 2.0.0
 
+* Added HR data file (health regions)
+* fixed test cases
+
 # canadianmaps 1.4.0
 
 * Added a `NEWS.md` file to track changes to the package.

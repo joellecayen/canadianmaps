@@ -1,6 +1,6 @@
 
 globalVariables(c("aes", '%+replace%', 'element_blank', 'unit', 'element_line', 'element_rect',
-                  'element_text', 'element_blank', 'FSA', 'PROV', 'REG', 'CD', 'CSD','X', 'Y'))
+                  'element_text', 'element_blank', 'FSA', 'PROV', 'REG', 'CD', 'CSD', 'HR','X', 'Y'))
 
 
 #' Canadian Province Boundary Data
